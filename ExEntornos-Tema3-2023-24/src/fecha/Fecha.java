@@ -1,24 +1,54 @@
 package fecha;
 
+/**
+ * Esta clase indica la si la fecha que ha insertado el usuario es correcta
+ * 
+ * @author rromera
+ */
 public class Fecha {
-	private int d; //dÌa
-	private int m; //mes
-	private int a; //aÒo
 
-	
+	/**
+	 * Atributo que recoge el numero que pertence al dia
+	 */
+	private int d;
+
+	/**
+	 * Atributo que recoge el numero que pertence al mes
+	 */
+	private int m;
+
+	/**
+	 * Atributo que recoge el numero que pertence al anio
+	 */
+	private int a;
+
+	/**
+	 * Constructor que limpia los atributos
+	 */
 	public Fecha() {
 
 	}
 
-	
+	/**
+	 * Constructor que recibe las variables de otra clase y se iguala los atributos
+	 * a estos
+	 * 
+	 * @param dia  Numero introducido el usuario que indica el dia
+	 * @param mes  Numero introducido el usuario que indica el mes
+	 * @param anio Numero introducido el usuario que indica el a√±o
+	 */
 	public Fecha(int dia, int mes, int anio) {
 		this.d = dia;
 		this.m = mes;
 		this.a = anio;
 	}
 
-	
-	
+	/**
+	 * Metodo que indica si la fecha es correcta, para ello hace uso de booleanos
+	 * que luego devuelve a la clase principal
+	 * 
+	 * @return Devuelve tres booleanos, cada uno respectivos a dia, mes y anio
+	 */
 	public boolean fechaCorrecta() {
 		boolean diaCorrecto, mesCorrecto, anioCorrecto;
 		anioCorrecto = a > 0;
@@ -43,13 +73,20 @@ public class Fecha {
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
 
-	// MÈtodo esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
+	/**
+	 * Metodo que, mediante calculos, indica si el a√±o que ha indicado el usuario es
+	 * bisiesto
+	 * 
+	 * @return Devuelve un booleano que indica si es bisiesto o no
+	 */
 	private boolean esBisiesto() {
 		boolean esBisiesto = (a % 4 == 0 && a % 100 != 0 || a % 400 == 0);
 		return esBisiesto;
 	}
 
-	// MÈtodo diaSiguiente
+	/**
+	 * Metodo que suma los numeros de cada atributo para y los suma correctamente
+	 */
 	public void diaSiguiente() {
 		d++;
 		if (!fechaCorrecta()) {
@@ -62,7 +99,9 @@ public class Fecha {
 		}
 	}
 
-	// MÈtodo toString
+	/**
+	 * Metodo que dibuja el mensaje final corregido
+	 */
 	public String toString() {
 		if (d < 10 && m < 10) {
 			return "0" + d + "-0" + m + "-" + a;
