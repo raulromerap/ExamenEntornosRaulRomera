@@ -7,20 +7,22 @@ package fecha;
  */
 public class Fecha {
 
+	private static final int DIEZ = 10;
+
 	/**
 	 * Atributo que recoge el numero que pertence al dia
 	 */
-	private int d;
+	private int numDia;
 
 	/**
 	 * Atributo que recoge el numero que pertence al mes
 	 */
-	private int m;
+	private int numMes;
 
 	/**
 	 * Atributo que recoge el numero que pertence al anio
 	 */
-	private int a;
+	private int numAño;
 
 	/**
 	 * Constructor que limpia los atributos
@@ -38,9 +40,9 @@ public class Fecha {
 	 * @param anio Numero introducido el usuario que indica el año
 	 */
 	public Fecha(int dia, int mes, int anio) {
-		this.d = dia;
-		this.m = mes;
-		this.a = anio;
+		this.numDia = dia;
+		this.numMes = mes;
+		this.numAño = anio;
 	}
 
 	/**
@@ -50,25 +52,31 @@ public class Fecha {
 	 * @return Devuelve tres booleanos, cada uno respectivos a dia, mes y anio
 	 */
 	public boolean fechaCorrecta() {
-		boolean diaCorrecto, mesCorrecto, anioCorrecto;
-		anioCorrecto = a > 0;
-		mesCorrecto = m >= 1 && m <= 12;
-		switch (m) {
+		boolean diaCorrecto;
+		
+		boolean mesCorrecto;
+		
+		boolean anioCorrecto;
+		
+		anioCorrecto = numAño > 0;
+		mesCorrecto = numMes >= 1 && numMes <= 12;
+		boolean diaMayor1 = numDia >= 1;
+		switch (numMes) {
 		case 2:
 			if (esBisiesto()) {
-				diaCorrecto = d >= 1 && d <= 29;
+				diaCorrecto = diaMayor1 && numDia <= 29;
 			} else {
-				diaCorrecto = d >= 1 && d <= 28;
+				diaCorrecto = diaMayor1 && numDia <= 28;
 			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			diaCorrecto = d >= 1 && d <= 30;
+			diaCorrecto = diaMayor1 && numDia <= 30;
 			break;
 		default:
-			diaCorrecto = d >= 1 && d <= 31;
+			diaCorrecto = diaMayor1 && numDia <= 31;
 		}
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
@@ -80,21 +88,20 @@ public class Fecha {
 	 * @return Devuelve un booleano que indica si es bisiesto o no
 	 */
 	private boolean esBisiesto() {
-		boolean esBisiesto = (a % 4 == 0 && a % 100 != 0 || a % 400 == 0);
-		return esBisiesto;
+		return numAño % 4 == 0 && numAño % 100 != 0 || numAño % 400 == 0;
 	}
 
 	/**
 	 * Metodo que suma los numeros de cada atributo para y los suma correctamente
 	 */
-	public void diaSiguiente() {
-		d++;
+	public void nextDay() {
+		numDia++;
 		if (!fechaCorrecta()) {
-			d = 1;
-			m++;
+			numDia = 1;
+			numMes++;
 			if (!fechaCorrecta()) {
-				m = 1;
-				a++;
+				numMes = 1;
+				numAño++;
 			}
 		}
 	}
@@ -103,15 +110,19 @@ public class Fecha {
 	 * Metodo que dibuja el mensaje final corregido
 	 */
 	public String toString() {
-		if (d < 10 && m < 10) {
-			return "0" + d + "-0" + m + "-" + a;
-		} else if (d < 10 && m >= 10) {
-			return "0" + d + "-" + m + "-" + a;
-		} else if (d >= 10 && m < 10) {
-			return d + "-0" + m + "-" + a;
+
+		String imprime = "";
+
+		if (numDia < DIEZ && numMes < DIEZ) {
+			imprime = ("0" + numDia + "-0" + numMes + "-" + numAño);
+		} else if (numDia < DIEZ && numMes >= DIEZ) {
+			imprime = ("0" + numDia + "-" + numMes + "-" + numAño);
+		} else if (numDia >= DIEZ && numMes < DIEZ) {
+			imprime = (numDia + "-0" + numMes + "-" + numAño);
 		} else {
-			return d + "-" + m + "-" + a;
+			imprime = (numDia + "-" + numMes + "-" + numAño);
 		}
+		return imprime;
 	}
 
 }
